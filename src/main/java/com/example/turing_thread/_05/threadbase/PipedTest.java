@@ -1,4 +1,4 @@
-package com.example.turing_thread._06.threadbase;
+package com.example.turing_thread._05.threadbase;
 
 import java.io.IOException;
 import java.io.PipedReader;

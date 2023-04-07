@@ -1,4 +1,4 @@
-package com.example.turing_thread._06.threadbase;
+package com.example.turing_thread._05.threadbase;
 
 public class VolatileDemo {
 

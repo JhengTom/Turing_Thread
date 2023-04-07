@@ -1,4 +1,4 @@
-package com.example.turing_thread._06.threadbase;
+package com.example.turing_thread._05.threadbase;
 
 import java.util.Random;
 import java.util.concurrent.Callable;
