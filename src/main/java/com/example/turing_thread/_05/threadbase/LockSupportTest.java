@@ -2,9 +2,11 @@ package com.example.turing_thread._05.threadbase;
 
 import java.util.concurrent.locks.LockSupport;
 
+import static java.lang.Thread.sleep;
+
 public class LockSupportTest {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         Thread parkThread = new Thread(new ParkThread());
         parkThread.start();
 
