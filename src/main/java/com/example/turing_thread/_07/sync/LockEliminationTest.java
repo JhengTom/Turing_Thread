@@ -16,8 +16,8 @@ public class LockEliminationTest {
 
     /**
      * 锁消除
-     * -XX:+EliminateLocks 开启锁消除(jdk8默认开启）
-     * -XX:-EliminateLocks 关闭锁消除
+     * -XX:+EliminateLocks 开启锁消除(jdk8默认开启） 748ms
+     * -XX:-EliminateLocks 关闭锁消除 2252 ms
      * @param str1
      * @param str2
      */
