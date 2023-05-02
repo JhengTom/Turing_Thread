@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Fox
- * 锁超时
+ * 鎖超時
  */
 @Slf4j
 public class ReentrantLockDemo4 {
@@ -17,17 +17,17 @@ public class ReentrantLockDemo4 {
 
         Thread t1 = new Thread(() -> {
 
-            log.debug("t1启动...");
-            // 注意： 即使是设置的公平锁，此方法也会立即返回获取锁成功或失败，公平策略不生效
+            log.debug("t1啟動...");
+            // 注意： 即使是設置的公平鎖，此方法也會立即返回獲取鎖成功或失敗，公平策略不生效
 //            if (!lock.tryLock()) {
-//                log.debug("t1获取锁失败，立即返回false");
+//                log.debug("t1獲 取鎖失敗，立即返回false");
 //                return;
 //            }
 
-            //超时
+            //超時
             try {
                 if (!lock.tryLock(1, TimeUnit.SECONDS)) {
-                    log.debug("等待 1s 后获取锁失败，返回");
+                    log.debug("等待 1s 后獲取鎖失敗，返回");
                     return;
                 }
             } catch (InterruptedException e) {
@@ -36,7 +36,7 @@ public class ReentrantLockDemo4 {
             }
 
             try {
-                log.debug("t1获得了锁");
+                log.debug("t1獲得了鎖");
             } finally {
                 lock.unlock();
             }
@@ -46,9 +46,9 @@ public class ReentrantLockDemo4 {
 
         lock.lock();
         try {
-            log.debug("main线程获得了锁");
+            log.debug("main線程獲得了鎖");
             t1.start();
-            //先让线程t1执行
+            //先讓線程t1執行
             Thread.sleep(2000);
         } finally {
             lock.unlock();

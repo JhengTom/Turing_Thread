@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Fox
- * 同步执行
+ * 同步執行
  */
 public class ReentrantLockDemo {
 
@@ -17,16 +17,16 @@ public class ReentrantLockDemo {
 
         for (int i = 0; i < 3; i++) {
             Thread thread = new Thread(()->{
-                //加锁
+                //加鎖
                 lock.lock();
                 try {
-                    // 临界区代码
-                    // TODO 业务逻辑：读写操作不能保证线程安全
+                    // 臨界區代碼
+                    // TODO 業務邏輯：讀寫操作不能保證線程安全
                     for (int j = 0; j < 10000; j++) {
                         sum++;
                     }
                 } finally {
-                    // 解锁
+                    // 解鎖
                     lock.unlock();
                 }
             });
