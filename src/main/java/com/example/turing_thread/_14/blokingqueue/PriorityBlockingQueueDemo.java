@@ -10,16 +10,18 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class PriorityBlockingQueueDemo {
 
     public static void main(String[] args) throws InterruptedException {
-        //创建优先级阻塞队列  Comparator为null,自然排序
-        PriorityBlockingQueue<Integer> queue=new PriorityBlockingQueue<Integer>(3);
-//         自定义Comparator
-//        PriorityBlockingQueue queue=new PriorityBlockingQueue<Integer>(
-//                5, new Comparator<Integer>() {
-//            @Override
-//            public int compare(Integer o1, Integer o2) {
-//                return o2-o1;
-//            }
-//        });
+        //創建優先級阻塞隊列  Comparator為null,自然排序 小到大
+//        PriorityBlockingQueue<Integer> queue=new PriorityBlockingQueue<Integer>(3);
+
+
+//         自定義Comparator
+        PriorityBlockingQueue queue=new PriorityBlockingQueue<Integer>(
+                5, new Comparator<Integer>() {
+            @Override //大到小
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        });
 
 
         Random random = new Random();
