@@ -13,38 +13,38 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author  Fox
- * 定长线程池饥饿示例
+ * 定長線程池飢餓示例
  */
 @Slf4j
 public class HungryTest {
- 
-    static final List<String> FOODS = Arrays.asList("猪脚饭", "宫保鸡丁", "鱼香肉丝", "麻婆豆腐");
- 
+
+    static final List<String> FOODS = Arrays.asList("豬腳飯", "宮保雞丁", "魚香肉絲", "麻婆豆腐");
+
     static final Random RANDOM = new Random();
- 
+
     static ExecutorService pool = Executors.newFixedThreadPool(2);
- 
-    //随机做菜
+
+    //隨機做菜
     public static String cooking() {
         return FOODS.get(RANDOM.nextInt(FOODS.size()));
     }
 
 
     public static void main(String[] args) throws InterruptedException {
-        // 服务员需要点菜、以及自己去做菜
+        // 服務員需要點菜、以及自己去做菜
         HungryTest.test();
     }
- 
+
     public static void test() {
         pool.execute(() -> {
-            //服务员开始点菜
-            log.info("开始给顾客点菜");
+            //服務員開始點菜
+            log.info("開始給顧客點菜1");
             Future<String> food = pool.submit(() -> {
-                log.info("开始做菜");
+                log.info("開始做菜");
                 return cooking();
             });
- 
-            //该服务员点完菜上菜
+
+            //該服務員點完菜上菜
             try {
                 log.info("上菜:{}", food.get());
             } catch (InterruptedException e) {
@@ -55,14 +55,14 @@ public class HungryTest {
         });
 
         pool.execute(() -> {
-            //服务员开始点菜
-            log.info("开始给顾客点菜");
+            //服務員開始點菜
+            log.info("開始給顧客點菜2");
             Future<String> food = pool.submit(() -> {
-                log.info("开始做菜");
+                log.info("開始做菜");
                 return cooking();
             });
 
-            //该服务员点完菜上菜
+            //該服務員點完菜上菜
             try {
                 log.info("上菜:{}", food.get());
             } catch (InterruptedException e) {

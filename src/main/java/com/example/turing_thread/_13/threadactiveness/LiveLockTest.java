@@ -4,13 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Fox
- * 活锁
+ * 活鎖
  */
 @Slf4j
 public class LiveLockTest {
 
     /**
-     * 定义一个勺子，ower 表示这个勺子的拥有者
+     * 定義一個勺子，ower 表示這個勺子的擁有者
      */
     static class Spoon {
         Diner owner;
@@ -29,12 +29,12 @@ public class LiveLockTest {
 
         //表示正在用餐
         public void use() {
-            log.info( "{} 用这个勺子吃饭.",owner.getName());
+            log.info( "{} 用這個勺子吃飯.",owner.getName());
         }
     }
 
     /**
-     * 定义一个晚餐类
+     * 定義一個晚餐類
      */
     static class Diner {
 
@@ -47,22 +47,22 @@ public class LiveLockTest {
             this.name = name;
         }
 
-        //和某人吃饭
+        //和某人吃飯
         public void eatWith(Diner diner, Spoon sharedSpoon) {
             try {
                 synchronized (sharedSpoon) {
                     while (isHungry) {
-                        //当前用餐者和勺子拥有者不是同一个人，则进行等待
+                        //當前用餐者和勺子擁有者不是同一個人，則進行等待
                         while (!sharedSpoon.getOwnerName().equals(name)) {
                             sharedSpoon.wait();
                         }
                         if (diner.isHungry()) {
-                            log.info( "{}：亲爱的我饿了，然后{}把勺子给了{}",
+                            log.info( "{}：親愛的我餓了，然後{}把勺子給了{}",
                                     diner.getName(),name,diner.getName());
                             sharedSpoon.setOwner(diner);
-                            //用餐
+                            //用餐 -->用餐完後再喚醒 避免活鎖
                             sharedSpoon.use();
-                            //唤醒等待的线程
+                            //喚醒等待的線程
                             sharedSpoon.notifyAll();
                         } else {
                             //用餐
@@ -91,14 +91,14 @@ public class LiveLockTest {
     public static void main(String[] args) {
         final Diner husband = new Diner(true, "丈夫");
         final Diner wife = new Diner(true, "妻子");
-        //最开始牛郎持有勺子
+        //最開始牛郎持有勺子
         final Spoon sharedSpoon = new Spoon(husband);
 
-        //织女和牛郎吃饭
+        //織女和牛郎吃飯
         Thread h = new Thread(()->wife.eatWith(husband, sharedSpoon));
         h.start();
 
-        //牛郎和织女吃饭
+        //牛郎和織女吃飯
         Thread w = new Thread(()->husband.eatWith(wife, sharedSpoon));
         w.start();
 
