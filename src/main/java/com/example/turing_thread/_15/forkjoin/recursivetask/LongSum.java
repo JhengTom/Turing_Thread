@@ -3,7 +3,7 @@ package com.example.turing_thread._15.forkjoin.recursivetask;
 import java.util.concurrent.RecursiveTask;
 
 public class LongSum extends RecursiveTask<Long> {
-    // 任务拆分最小阈值
+    // 任務拆分最小閾值
     static final int SEQUENTIAL_THRESHOLD = 10000000;
 
     int low;
@@ -19,7 +19,7 @@ public class LongSum extends RecursiveTask<Long> {
     @Override
     protected Long compute() {
 
-        //当任务拆分到小于等于阀值时开始求和
+        //當任務拆分到小於等於閥值時開始求和
         if (high - low <= SEQUENTIAL_THRESHOLD) {
 
             long sum = 0;
@@ -27,14 +27,14 @@ public class LongSum extends RecursiveTask<Long> {
                 sum += array[i];
             }
             return sum;
-        } else {  // 任务过大继续拆分
+        } else {  // 任務過大繼續拆分
             int mid = low + (high - low) / 2;
             LongSum left = new LongSum(array, low, mid);
             LongSum right = new LongSum(array, mid, high);
-            // 提交任务
+            // 提交任務
             left.fork();
             right.fork();
-            //获取任务的执行结果,将阻塞当前线程直到对应的子任务完成运行并返回结果
+            //獲取任務的執行結果,將阻塞當前線程直到對應的子任務完成運行並返回結果
             long rightAns = right.compute();
             long leftAns = left.join();
             return leftAns + rightAns;

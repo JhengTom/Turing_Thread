@@ -4,7 +4,7 @@ package com.example.turing_thread._15.forkjoin.recursiveaction;
 import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
 
-import com.tuling.forkjoin.util.Utils;
+import com.example.turing_thread._15.forkjoin.util.Utils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertArrayEquals;

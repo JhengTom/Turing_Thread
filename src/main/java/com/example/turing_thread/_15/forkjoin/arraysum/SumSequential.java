@@ -3,7 +3,7 @@ package com.example.turing_thread._15.forkjoin.arraysum;
 import java.time.Duration;
 import java.time.Instant;
 
-import com.tuling.forkjoin.util.Utils;
+import com.example.turing_thread._15.forkjoin.util.Utils;
 
 /**
  * @author Fox

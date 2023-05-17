@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.CountedCompleter;
 import java.util.concurrent.ForkJoinPool;
 
-import com.tuling.forkjoin.util.CalcUtil;
+import com.example.turing_thread._15.forkjoin.util.CalcUtil;
 
 /**
  * @author Fox

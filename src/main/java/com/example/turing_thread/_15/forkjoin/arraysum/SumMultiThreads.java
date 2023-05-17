@@ -8,12 +8,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import com.tuling.forkjoin.util.Utils;
+import com.example.turing_thread._15.forkjoin.util.Utils;
 
 /**
  * @author Fox
  *
- * 多线程计算1亿个整数的和
+ * 多線程計算1億個整數的和
  */
 public class SumMultiThreads {
     //拆分的粒度
@@ -23,7 +23,7 @@ public class SumMultiThreads {
         long result = 0;
         int numThreads = arr.length / NUM > 0 ? arr.length / NUM : 1;
         int num = arr.length / numThreads;
-        //任务分解
+        //任務分解
         SumTask[] tasks = new SumTask[numThreads];
         Future<Long>[] sums = new Future[numThreads];
         for (int i = 0; i < numThreads; i++) {
@@ -31,7 +31,7 @@ public class SumMultiThreads {
                     ((i + 1) * NUM));
             sums[i] = executor.submit(tasks[i]);
         }
-        //结果合并
+        //結果合併
         for (int i = 0; i < numThreads; i++) {
             result += sums[i].get();
         }
@@ -40,21 +40,21 @@ public class SumMultiThreads {
     }
 
     public static void main(String[] args) throws Exception {
-        // 准备数组
+        // 準備數組
         int[] arr = Utils.buildRandomIntArray(100000000);
-        //获取线程数
+        //獲取線程數
         int numThreads = arr.length / NUM > 0 ? arr.length / NUM : 1;
 
         System.out.printf("The array length is: %d\n", arr.length);
-        // 构建线程池
+        // 構建線程池
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
-        //预热
-        //((ThreadPoolExecutor)executor).prestartAllCoreThreads();
+        //預熱 : 提前先創建線程池 可加快
+        ((ThreadPoolExecutor)executor).prestartAllCoreThreads();
 
         Instant now = Instant.now();
-        // 数组求和
+        // 數組求和
         long result = sum(arr, executor);
-        System.out.println("执行时间："+Duration.between(now,Instant.now()).toMillis());
+        System.out.println("執行時間："+Duration.between(now,Instant.now()).toMillis());
 
         System.out.printf("The result is: %d\n", result);
 

@@ -1,6 +1,8 @@
 package com.example.turing_thread._15.forkjoin.recursivetask;
 
 
+import com.example.turing_thread._15.forkjoin.util.Utils;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
@@ -12,48 +14,47 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import com.tuling.forkjoin.util.Utils;
 
 /**
  * @author Fox
  *
- * 利用ForkJoinPool计算1亿个整数的和
+ * 利用ForkJoinPool計算1億個整數的和
  */
 public class LongSumMain {
-	// 获取逻辑处理器数量 12
+	// 獲取邏輯處理器數量 12
 	static final int NCPU = Runtime.getRuntime().availableProcessors();
 
 	static long calcSum;
 
 
 	public static void main(String[] args) throws Exception {
-		//准备数组
+		//準備數組
 		int[] array = Utils.buildRandomIntArray(100000000);
 
 		Instant now = Instant.now();
-		// 单线程计算数组总和
+		// 單線程計算數組總和
 		calcSum = seqSum(array);
 		System.out.println("seq sum=" + calcSum);
-		System.out.println("执行时间："+ Duration.between(now,Instant.now()).toMillis());
+		System.out.println("執行時間："+ Duration.between(now,Instant.now()).toMillis());
 
-		//递归任务
+		//遞歸任務
 		LongSum ls = new LongSum(array, 0, array.length);
-		// 构建ForkJoinPool
+		// 構建ForkJoinPool
   		ForkJoinPool fjp  = new ForkJoinPool(NCPU);
 
 		now = Instant.now();
-		//ForkJoin计算数组总和
+		//ForkJoin計算數組總和
 		ForkJoinTask<Long> result = fjp.submit(ls);
 		System.out.println("forkjoin sum=" + result.get());
-		System.out.println("执行时间："+ Duration.between(now,Instant.now()).toMillis());
+		System.out.println("執行時間："+ Duration.between(now,Instant.now()).toMillis());
 
 		fjp.shutdown();
 
 		now = Instant.now();
-		//并行流计算数组总和
+		//并行流計算數組總和
 		Long sum = (Long) IntStream.of(array).asLongStream().parallel().sum();
 		System.out.println("IntStream sum="+sum);
-		System.out.println("执行时间："+ Duration.between(now,Instant.now()).toMillis());
+		System.out.println("執行時間："+ Duration.between(now,Instant.now()).toMillis());
 
 	}
 

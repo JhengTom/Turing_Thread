@@ -38,7 +38,7 @@ public class MergeSortAction extends RecursiveAction {
 		left.join();
 		right.join();
 		// sequential merge
-		arrayToSort = MergeSortMain.merge(left.getSortedArray(), right.getSortedArray());
+//		arrayToSort = MergeSortMain.merge(left.getSortedArray(), right.getSortedArray());
 	}
 
 	public int[] getSortedArray() {

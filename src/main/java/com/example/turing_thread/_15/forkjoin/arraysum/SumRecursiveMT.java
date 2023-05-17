@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.tuling.forkjoin.util.Utils;
+import com.example.turing_thread._15.forkjoin.util.Utils;
 
 public class SumRecursiveMT {
     public static class RecursiveSumTask implements Callable<Long> {
@@ -30,7 +30,7 @@ public class SumRecursiveMT {
             System.out.format("%s range [%d-%d] begin to compute %n",
                     Thread.currentThread().getName(), lo, hi);
             long result = 0;
-            //最小拆分的阈值
+            //最小拆分的閾值
             if (hi - lo <= SEQUENTIAL_CUTOFF) {
                 for (int i = lo; i < hi; i++) {
                     result += arr[i];
@@ -42,8 +42,8 @@ public class SumRecursiveMT {
                         executorService, arr, lo, (hi + lo) / 2);
                 RecursiveSumTask right = new RecursiveSumTask(
                         executorService, arr, (hi + lo) / 2, hi);
-                Future<Long> lr = executorService.submit(left);
-                Future<Long> rr = executorService.submit(right);
+                Future<Long> lr = executorService.submit(left);//啟新線程執行
+                Future<Long> rr = executorService.submit(right);//啟新線程執行
 
                 result = lr.get() + rr.get();
 //                System.out.format("%s range [%d-%d] finished to compute %n",
@@ -57,26 +57,25 @@ public class SumRecursiveMT {
 
     public static long sum(int[] arr) throws Exception {
 
-        //思考： 用 Executors.newFixedThreadPool可以吗？   定长线程的饥饿
-        ExecutorService executorService = Executors.newFixedThreadPool(12);
-        //ExecutorService executorService = Executors.newCachedThreadPool();
-         //递归任务 求和
+        //思考： 用 Executors.newFixedThreadPool可以嗎？   定長線程的飢餓 線程資源耗盡
+//        ExecutorService executorService = Executors.newFixedThreadPool(12);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+         //遞歸任務 求和
         RecursiveSumTask task = new RecursiveSumTask(executorService, arr, 0, arr.length);
-        //返回结果
+        //返回結果
         long result = executorService.submit(task).get();
 
         executorService.shutdown();
         return result;
     }
-
     public static void main(String[] args) throws Exception {
-        //准备数组
+        //準備數組
         int[] arr = Utils.buildRandomIntArray(100000000);
         System.out.printf("The array length is: %d\n", arr.length);
         Instant now = Instant.now();
-        //数组求和
+        //數組求和
         long result = sum(arr);
-        System.out.println("执行时间："+ Duration.between(now,Instant.now()).toMillis());
+        System.out.println("執行時間："+ Duration.between(now,Instant.now()).toMillis());
         System.out.printf("The result is: %d\n", result);
 
     }
